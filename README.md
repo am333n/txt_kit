@@ -119,17 +119,171 @@ Txt('Error message', style: TxtStyle.bodyMSemiBold, colorRole: TxtColorRole.erro
 Txt('Brand color', style: TxtStyle.bodyLBold, color: Color(0xFF6366F1))
 ```
 
-### RichText with `txtSpan`
+## Using `toTextStyle()` with Flutter's native `Text` widget
+
+If you need to use txt_kit styles outside of the `Txt` widget — for example inside
+Flutter's own `Text`, `DefaultTextStyle`, `TextTheme`, or any third-party widget
+that accepts a `TextStyle` — use `.toTextStyle()`.
+
+---
+
+### Basic usage
+```dart
+Text(
+  'Hello world',
+  style: TxtStyle.bodyLBold.toTextStyle(),
+)
+```
+
+---
+
+### With color override
+```dart
+Text(
+  'Red text',
+  style: TxtStyle.bodyLBold.toTextStyle(color: Colors.red),
+)
+```
+
+---
+
+### With multiple overrides
+```dart
+Text(
+  'Custom',
+  style: TxtStyle.headerMBold.toTextStyle(
+    color: Colors.indigo,
+    fontSize: 28,
+    letterSpacing: 1.5,
+    height: 1.4,
+  ),
+)
+```
+
+---
+
+### With `DefaultTextStyle`
+```dart
+DefaultTextStyle(
+  style: TxtStyle.bodyLRegular.toTextStyle(color: Colors.grey),
+  child: Column(
+    children: [
+      Text('Inherits the style'),
+      Text('This too'),
+    ],
+  ),
+)
+```
+
+---
+
+### With `TextTheme` in `MaterialApp`
+```dart
+MaterialApp(
+  theme: ThemeData(
+    textTheme: TextTheme(
+      bodyLarge:   TxtStyle.bodyLRegular.toTextStyle(),
+      bodyMedium:  TxtStyle.bodyMRegular.toTextStyle(),
+      titleLarge:  TxtStyle.headerMBold.toTextStyle(),
+      headlineLarge: TxtStyle.headerLBold.toTextStyle(),
+    ),
+  ),
+)
+```
+
+---
+
+### With a custom app font
+```dart
+Text(
+  'Inter font',
+  style: TxtStyle.bodyLRegular.toTextStyle(
+    fontFamilyFallback: 'Inter',
+  ),
+)
+```
+
+---
+
+### `.copyWith()` vs `.toTextStyle()` — which to use?
+
+| | Returns | Use when |
+|---|---|---|
+| `TxtStyle.bodyLBold.copyWith(...)` | `TxtSpec` | Passing to `Txt` widget or `TxtSpan` |
+| `TxtStyle.bodyLBold.toTextStyle(...)` | `TextStyle` | Passing to `Text`, `DefaultTextStyle`, `TextTheme`, or any third-party widget |
+
+> **Rule of thumb:** inside your own UI use `Txt` and `TxtSpan` — they handle
+> theme resolution and color roles automatically. Only drop down to
+> `.toTextStyle()` when integrating with widgets that require a raw `TextStyle`.
+
+
+
+### RichText with `TxtSpan`
 ```dart
 RichText(
   text: TextSpan(children: [
-    txtSpan(context, text: 'Normal ', style: TxtStyle.bodyLRegular),
-    txtSpan(context, text: 'bold red', style: TxtStyle.bodyLBold.copyWith(color: Colors.red)),
-    txtSpan(context, text: ' muted.', style: TxtStyle.bodyLRegular, colorRole: TxtColorRole.secondary),
+    TxtSpan(context, text: 'Normal ',  style: TxtStyle.bodyLRegular),
+    TxtSpan(context, text: 'Bold red', style: TxtStyle.bodyLBold.copyWith(color: Colors.red)),
+    TxtSpan(context, text: ' muted.',  style: TxtStyle.bodyLRegular, colorRole: TxtColorRole.secondary),
   ]),
 )
 ```
 
+---
+
+### With a tap recognizer
+```dart
+RichText(
+  text: TextSpan(children: [
+    TxtSpan(context, text: 'By continuing you agree to our ', style: TxtStyle.bodyMRegular),
+    TxtSpan(
+      context,
+      text: 'Terms of Service',
+      style: TxtStyle.bodyMBold.copyWith(
+        decoration: TextDecoration.underline,
+      ),
+      recognizer: TapGestureRecognizer()..onTap = () => launchTerms(),
+    ),
+    TxtSpan(context, text: ' and ', style: TxtStyle.bodyMRegular),
+    TxtSpan(
+      context,
+      text: 'Privacy Policy',
+      style: TxtStyle.bodyMBold.copyWith(
+        decoration: TextDecoration.underline,
+      ),
+      recognizer: TapGestureRecognizer()..onTap = () => launchPrivacy(),
+    ),
+  ]),
+)
+```
+
+---
+
+### With color roles
+```dart
+RichText(
+  text: TextSpan(children: [
+    TxtSpan(context, text: 'Status: ',  style: TxtStyle.bodyLRegular, colorRole: TxtColorRole.secondary),
+    TxtSpan(context, text: 'Payment failed', style: TxtStyle.bodyLBold, colorRole: TxtColorRole.error),
+  ]),
+)
+```
+
+---
+
+### Deprecated — do not use
+
+The following top-level functions are deprecated and will be removed in a future version.
+Use `TxtSpan` directly instead.
+```dart
+// ❌ Deprecated
+txtSpan(context, text: 'hello', style: TxtStyle.bodyLRegular)
+txtSpanOf(context, text: 'hello', style: TxtStyle.bodyLRegular)
+textSpan(context, text: 'hello', style: TxtStyle.bodyLRegular)
+
+// ✅ Use this
+TxtSpan(context, text: 'hello', style: TxtStyle.bodyLRegular)
+```
 ---
 
 ## Spec resolution priority
