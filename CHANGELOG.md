@@ -1,3 +1,5 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+* Initial release.
+* Provides a set of customizable text widgets for Flutter
+* Designed to simplify common text-related UI patterns in Flutter apps.
