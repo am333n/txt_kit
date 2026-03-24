@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide FontStyle;
-import 'package:flutter/material.dart' as material show FontStyle;
+
 import 'txt_color_scheme.dart';
 import 'txt_theme.dart';
 import 'txt_token.dart';

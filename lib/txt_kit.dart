@@ -33,7 +33,7 @@
 /// Txt('App style', style: AppTxtStyle.heroTitle)
 /// Txt('Muted', style: TxtStyle.bodyMRegular, colorRole: TxtColorRole.secondary)
 /// ```
-library txt_kit;
+library;
 
 export 'src/txt_color_scheme.dart';
 export 'src/txt_defaults.dart';
