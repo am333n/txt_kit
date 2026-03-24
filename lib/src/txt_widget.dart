@@ -31,19 +31,19 @@ class Txt extends StatelessWidget {
   final String text;
 
   /// A built-in [TxtStyle] enum value, an app-level custom style key (any
-  /// Object registered in [TxtThemeData.customTokens]), or a raw [TxtSpec]
+  /// Object registered in [TxtThemeData.customSpecs]), or a raw [TxtSpec]
   /// built via copyWith.
   ///
   /// Accepts:
-  ///   • [TxtStyle]          — built-in semantic token
-  ///   • Any custom enum     — must be registered in TxtThemeData.customTokens
-  ///   • [TxtSpec]          — raw / pre-built token (from .copyWith chains)
+  ///   • [TxtStyle]          — built-in semantic spec
+  ///   • Any custom enum     — must be registered in TxtThemeData.customSpecs
+  ///   • [TxtSpec]          — raw / pre-built spec (from .copyWith chains)
   final Object style;
 
   /// Semantic color role from [TxtColorScheme]. Ignored when [color] is set.
   final TxtColorRole? colorRole;
 
-  /// Direct color override. Takes priority over [colorRole] and token color.
+  /// Direct color override. Takes priority over [colorRole] and spec color.
   final Color? color;
 
   /// Constrain the widget width.
@@ -78,14 +78,14 @@ class Txt extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = TxtTheme.of(context);
 
-    // ── 1. Resolve token ─────────────────────────────────────────────────────
-    final TxtSpec token = _resolveToken(style, theme);
+    // ── 1. Resolve spec ─────────────────────────────────────────────────────
+    final TxtSpec spec = _resolveToken(style, theme);
 
     // ── 2. Resolve color ─────────────────────────────────────────────────────
-    final Color? resolvedColor = _resolveColor(color, colorRole, token, theme);
+    final Color? resolvedColor = _resolveColor(color, colorRole, spec, theme);
 
     // ── 3. Build TextStyle ───────────────────────────────────────────────────
-    final textStyle = token.toTextStyle(
+    final textStyle = spec.toTextStyle(
       colorOverride: resolvedColor,
       fontFamilyFallback: theme.defaultFontFamily,
     );
@@ -112,7 +112,7 @@ class Txt extends StatelessWidget {
         TxtSpec(fontSize: 14, fontWeight: FontWeight.w400),
       );
     }
-    if (style is TxtSpec) return style; // raw token passed directly
+    if (style is TxtSpec) return style; // raw spec passed directly
     return theme.resolve(style);
   }
 
@@ -155,7 +155,7 @@ class _BuiltinDefault {
 }
 
 // ---------------------------------------------------------------------------
-// TxtRich  —  rich text helper built on the same token system.
+// TxtRich  —  rich text helper built on the same spec system.
 // ---------------------------------------------------------------------------
 
 /// Build a [TextSpan] from a style key (same resolution rules as [Txt]).
@@ -168,17 +168,17 @@ TextSpan txtSpan(
   List<TextSpan>? children,
 }) {
   final theme = TxtTheme.of(context);
-  final token = style is TxtSpec ? style : theme.resolve(style);
+  final spec = style is TxtSpec ? style : theme.resolve(style);
 
   Color? resolvedColor = color;
   if (resolvedColor == null && colorRole != null) {
     resolvedColor = Txt._colorFromRole(colorRole, theme.colorScheme);
   }
-  resolvedColor ??= token.color;
+  resolvedColor ??= spec.color;
 
   return TextSpan(
     text: text,
-    style: token.toTextStyle(
+    style: spec.toTextStyle(
       colorOverride: resolvedColor,
       fontFamilyFallback: theme.defaultFontFamily,
     ),

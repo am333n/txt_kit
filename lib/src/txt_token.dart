@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' as material show FontStyle;
 
 // ---------------------------------------------------------------------------
 // TxtSpec  —  one semantic style definition (size + weight + family + extras)
-// Every app can create its own token map using these.
+// Every app can create its own spec map using these.
 // ---------------------------------------------------------------------------
 
 class TxtSpec {

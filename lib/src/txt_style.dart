@@ -11,7 +11,7 @@ abstract class TxtStyleKey {
   String get name;
 }
 
-/// Built-in style tokens. These map to default sizes/weights in [TxtDefaults].
+/// Built-in style specs. These map to default sizes/weights in [TxtDefaults].
 enum TxtStyle implements TxtStyleKey {
   // ── Body ──────────────────────────────────────────────────────────────────
   bodyLRegular,
