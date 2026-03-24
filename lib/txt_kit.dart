@@ -13,12 +13,12 @@
 ///       onDark: Colors.white,
 ///     ),
 ///     defaultFontFamily: 'YourFont',
-///     // override built-in tokens:
-///     tokenOverrides: {
+///     // override built-in specs:
+///     specOverrides: {
 ///       TxtStyle.bodyLBold: TxtSpec(fontSize: 15, fontWeight: FontWeight.w700),
 ///     },
 ///     // add your own app-level style keys:
-///     customTokens: {
+///     customSpecs: {
 ///       AppTxtStyle.heroTitle: TxtSpec(fontSize: 48, fontWeight: FontWeight.w800),
 ///     },
 ///   ),

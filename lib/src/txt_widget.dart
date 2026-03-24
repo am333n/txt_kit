@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide FontStyle;
+import 'package:txt_kit/txt_kit.dart';
 
 import 'txt_color_scheme.dart';
 import 'txt_theme.dart';
@@ -72,7 +74,7 @@ class Txt extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
   });
 
-  static const Object _defaultStyle = _BuiltinDefault();
+  static const Object _defaultStyle = TxtStyle.bodyLRegular;
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +108,6 @@ class Txt extends StatelessWidget {
   }
 
   static TxtSpec _resolveToken(Object style, TxtThemeData theme) {
-    if (style is _BuiltinDefault) {
-      return theme.resolve(
-        // ignore: invalid_use_of_visible_for_testing_member — safe, internal
-        TxtSpec(fontSize: 14, fontWeight: FontWeight.w400),
-      );
-    }
     if (style is TxtSpec) return style; // raw spec passed directly
     return theme.resolve(style);
   }
@@ -148,15 +144,10 @@ class Txt extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Internal sentinel for the default style when nothing is passed.
-// ---------------------------------------------------------------------------
-class _BuiltinDefault {
-  const _BuiltinDefault();
-}
-
-// ---------------------------------------------------------------------------
 // TxtRich  —  rich text helper built on the same spec system.
 // ---------------------------------------------------------------------------
+@Deprecated(
+    'Use TxtSpan instead. TxtSpan(context, text: "hello", style: TxtStyle.bodyLRegular)')
 
 /// Build a [TextSpan] from a style key (same resolution rules as [Txt]).
 TextSpan txtSpan(
@@ -184,4 +175,39 @@ TextSpan txtSpan(
     ),
     children: children,
   );
+}
+
+class TxtSpan extends TextSpan {
+  TxtSpan(
+    BuildContext context, {
+    super.text,
+    required Object style,
+    Color? color,
+    TxtColorRole? colorRole,
+    super.children,
+    super.recognizer,
+  }) : super(
+          style: _resolve(context, style, color, colorRole),
+        );
+
+  static TextStyle _resolve(
+    BuildContext context,
+    Object style,
+    Color? color,
+    TxtColorRole? colorRole,
+  ) {
+    final theme = TxtTheme.of(context);
+    final spec = style is TxtSpec ? style : theme.resolve(style);
+
+    Color? resolvedColor = color;
+    if (resolvedColor == null && colorRole != null) {
+      resolvedColor = Txt._colorFromRole(colorRole, theme.colorScheme);
+    }
+    resolvedColor ??= spec.color;
+
+    return spec.toTextStyle(
+      colorOverride: resolvedColor,
+      fontFamilyFallback: theme.defaultFontFamily,
+    );
+  }
 }

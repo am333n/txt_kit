@@ -3,7 +3,7 @@ import 'txt_style.dart';
 import 'txt_token.dart';
 
 // ---------------------------------------------------------------------------
-// TxtDefaults  —  the out-of-the-box token map for [TxtStyle].
+// TxtDefaults  —  the out-of-the-box spec map for [TxtStyle].
 // Apps override this entirely or partially via [TxtTheme].
 // ---------------------------------------------------------------------------
 
