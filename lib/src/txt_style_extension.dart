@@ -1,33 +1,11 @@
-import 'dart:ui';
+import 'package:flutter/painting.dart';
 import 'package:txt_kit/txt_kit.dart';
 
-// ---------------------------------------------------------------------------
-// TxtStyleExtension  —  adds .spec and .copyWith directly onto [TxtStyle].
-//
-// This makes the call-site feel like:
-//   Txt('Hello', style: TxtStyle.bodyLBold.copyWith(color: Colors.red))
-// instead of:
-//   Txt('Hello', style: TxtStyle.bodyLBold.spec.copyWith(color: Colors.red))
-//
-// Both forms work. .copyWith is the shorthand.
-// ---------------------------------------------------------------------------
-
 extension TxtStyleExtension on TxtStyle {
-  /// The default [TxtSpec] for this style from [TxtDefaults].
-  /// Note: this is the *library default*, not theme-overridden.
-  /// For theme-aware resolution use [TxtThemeData.resolve].
   TxtSpec get spec =>
       TxtDefaults.specs[this] ??
       const TxtSpec(fontSize: 14, fontWeight: FontWeight.w400);
 
-  /// Shorthand: starts from the default spec and applies overrides.
-  ///
-  /// ```dart
-  /// Txt('Hello', style: TxtStyle.bodyLBold.copyWith(
-  ///   color: Colors.red,
-  ///   letterSpacing: 1.2,
-  /// ))
-  /// ```
   TxtSpec copyWith({
     double? fontSize,
     FontWeight? fontWeight,
@@ -44,23 +22,40 @@ extension TxtStyleExtension on TxtStyle {
     Paint? foreground,
     Paint? background,
     List<Shadow>? shadows,
-  }) {
-    return spec.copyWith(
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      fontFamily: fontFamily,
-      letterSpacing: letterSpacing,
-      wordSpacing: wordSpacing,
-      height: height,
-      color: color,
-      decoration: decoration,
-      decorationColor: decorationColor,
-      decorationStyle: decorationStyle,
-      decorationThickness: decorationThickness,
-      fontStyle: fontStyle,
-      foreground: foreground,
-      background: background,
-      shadows: shadows,
-    );
-  }
+  }) =>
+      spec.copyWith(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontFamily: fontFamily,
+        letterSpacing: letterSpacing,
+        wordSpacing: wordSpacing,
+        height: height,
+        color: color,
+        decoration: decoration,
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        fontStyle: fontStyle,
+        foreground: foreground,
+        background: background,
+        shadows: shadows,
+      );
+
+  TextStyle toTextStyle({
+    Color? color,
+    String? fontFamilyFallback,
+    double? fontSize,
+    FontWeight? fontWeight,
+    double? letterSpacing,
+    double? height,
+  }) =>
+      spec
+          .copyWith(
+            color: color,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            letterSpacing: letterSpacing,
+            height: height,
+          )
+          .toTextStyle(fontFamilyFallback: fontFamilyFallback);
 }
