@@ -17,7 +17,7 @@ class TxtThemeData {
 
   /// Overrides for built-in [TxtStyle] specs.
   /// Provide only the specs you want to change — the rest use [TxtDefaults].
-  final Map<TxtStyle, TxtSpec> tokenOverrides;
+  final Map<TxtStyle, TxtSpec> specOverrides;
 
   /// Extra custom style keys (your own enum values, e.g. `AppTxtStyle`).
   /// These are resolved first, before built-in specs.
@@ -26,20 +26,20 @@ class TxtThemeData {
   const TxtThemeData({
     this.colorScheme = TxtColorScheme.light,
     this.defaultFontFamily,
-    this.tokenOverrides = const {},
+    this.specOverrides = const {},
     this.customSpecs = const {},
   });
 
   TxtThemeData copyWith({
     TxtColorScheme? colorScheme,
     String? defaultFontFamily,
-    Map<TxtStyle, TxtSpec>? tokenOverrides,
+    Map<TxtStyle, TxtSpec>? specOverrides,
     Map<Object, TxtSpec>? customSpecs,
   }) {
     return TxtThemeData(
       colorScheme: colorScheme ?? this.colorScheme,
       defaultFontFamily: defaultFontFamily ?? this.defaultFontFamily,
-      tokenOverrides: tokenOverrides ?? this.tokenOverrides,
+      specOverrides: specOverrides ?? this.specOverrides,
       customSpecs: customSpecs ?? this.customSpecs,
     );
   }
@@ -49,7 +49,7 @@ class TxtThemeData {
   /// Resolve any style key (built-in [TxtStyle] or a custom app key) to a
   /// [TxtSpec]. Priority:
   ///   1. customSpecs   (app's own keys + full custom specs)
-  ///   2. tokenOverrides (app overrides of built-in keys)
+  ///   2. specOverrides (app overrides of built-in keys)
   ///   3. TxtDefaults    (library defaults)
   TxtSpec resolve(Object styleKey) {
     // 1 — custom specs registered by the app
@@ -58,9 +58,9 @@ class TxtThemeData {
     }
 
     // 2 — overrides of built-in specs
-    if (styleKey is TxtStyle && tokenOverrides.containsKey(styleKey)) {
+    if (styleKey is TxtStyle && specOverrides.containsKey(styleKey)) {
       final base = TxtDefaults.specs[styleKey]!;
-      final override = tokenOverrides[styleKey]!;
+      final override = specOverrides[styleKey]!;
       return base.merge(override);
     }
 
@@ -83,7 +83,7 @@ class TxtThemeData {
     return TxtThemeData(
       colorScheme: TxtColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       defaultFontFamily: t < 0.5 ? a.defaultFontFamily : b.defaultFontFamily,
-      tokenOverrides: _lerpTokenMap(a.tokenOverrides, b.tokenOverrides, t),
+      specOverrides: _lerpTokenMap(a.specOverrides, b.specOverrides, t),
       customSpecs: _lerpTokenMap(a.customSpecs, b.customSpecs, t),
     );
   }

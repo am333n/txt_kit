@@ -13,7 +13,7 @@ A robust, reusable Flutter text widget library with per-app theming, custom styl
 | **Per-app themes** | Override built-in tokens per-app via `TxtThemeData` |
 | **Custom style keys** | Register your own enum values (`AppTxtStyle.heroTitle`) |
 | **Semantic colors** | `TxtColorRole.secondary` instead of hard-coded hex |
-| **Custom font per app** | `defaultFontFamily` + per-token `fontFamily` overrides |
+| **Custom font per app** | `defaultFontFamily` + per-spec `fontFamily` overrides |
 | **RichText support** | `txtSpan()` uses the same resolution pipeline |
 | **No dependencies** | Pure Flutter, zero third-party packages |
 
@@ -55,13 +55,13 @@ void main() {
         ),
 
         // Override built-in tokens for this app
-        tokenOverrides: {
+        specOverrides: {
           TxtStyle.bodyLRegular: const TxtSpec(fontSize: 15, fontWeight: FontWeight.w400),
           TxtStyle.headerLBold:  const TxtSpec(fontSize: 36, fontWeight: FontWeight.w800),
         },
 
         // Register app-level custom style keys
-        customTokens: {
+        customSpecs: {
           AppTxtStyle.heroTitle: const TxtSpec(
             fontSize: 52,
             fontWeight: FontWeight.w900,
@@ -85,7 +85,7 @@ void main() {
 
 ## Usage
 
-### Built-in token
+### Built-in specs
 ```dart
 Txt('Hello world', style: TxtStyle.bodyLBold)
 ```
