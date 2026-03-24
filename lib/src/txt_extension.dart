@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/src/painting/text_style.dart';
 import 'package:txt_kit/txt_kit.dart';
 
-extension TxtStyleExtension on TxtStyle {
+extension TxtStyleExtension2 on TxtStyle {
   TxtSpec get spec =>
       TxtDefaults.specs[this] ??
       const TxtSpec(fontSize: 14, fontWeight: FontWeight.w400);

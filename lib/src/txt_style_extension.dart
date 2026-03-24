@@ -1,8 +1,5 @@
 import 'dart:ui';
-
-import 'txt_defaults.dart';
-import 'txt_style.dart';
-import 'txt_token.dart';
+import 'package:txt_kit/txt_kit.dart';
 
 // ---------------------------------------------------------------------------
 // TxtStyleExtension  —  adds .spec and .copyWith directly onto [TxtStyle].

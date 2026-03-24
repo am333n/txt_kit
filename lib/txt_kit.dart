@@ -42,3 +42,4 @@ export 'src/txt_style_extension.dart';
 export 'src/txt_theme.dart';
 export 'src/txt_token.dart';
 export 'src/txt_widget.dart';
+export 'src/txt_extension.dart';

@@ -1,10 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide FontStyle;
 import 'package:txt_kit/txt_kit.dart';
-
-import 'txt_color_scheme.dart';
-import 'txt_theme.dart';
-import 'txt_token.dart';
 
 // ---------------------------------------------------------------------------
 // Txt  —  the main text widget.
