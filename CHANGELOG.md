@@ -11,3 +11,6 @@
 * New toTextStyle() extension directly on textStyles.
 * New textspan Widget instead of method.
 * Default Txtstyle set to TxtStyleBodyLRegular.
+
+## 1.0.3
+* Bug Fixes
