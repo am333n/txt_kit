@@ -12,7 +12,7 @@ class TxtThemeData {
   /// Semantic color roles for text.
   final TxtColorScheme colorScheme;
 
-  /// Global font family applied when a token doesn't specify its own.
+  /// Global font family applied when a spec doesn't specify its own.
   final String? defaultFontFamily;
 
   /// Overrides for built-in [TxtStyle] specs.

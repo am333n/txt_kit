@@ -13,8 +13,8 @@ import 'txt_token.dart';
 // Basic:
 //   Txt('Hello world', style: TxtStyle.bodyLBold)
 //
-// copyWith on the token:
-//   Txt('Hello world', style: TxtStyle.bodyLBold.token.copyWith(color: Colors.red))
+// copyWith on the spec:
+//   Txt('Hello world', style: TxtStyle.bodyLBold.spec.copyWith(color: Colors.red))
 //
 // Custom app style key:
 //   Txt('Hello world', style: AppTxtStyle.heroTitle)

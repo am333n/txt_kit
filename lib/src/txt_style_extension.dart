@@ -5,12 +5,12 @@ import 'txt_style.dart';
 import 'txt_token.dart';
 
 // ---------------------------------------------------------------------------
-// TxtStyleExtension  —  adds .token and .copyWith directly onto [TxtStyle].
+// TxtStyleExtension  —  adds .spec and .copyWith directly onto [TxtStyle].
 //
 // This makes the call-site feel like:
 //   Txt('Hello', style: TxtStyle.bodyLBold.copyWith(color: Colors.red))
 // instead of:
-//   Txt('Hello', style: TxtStyle.bodyLBold.token.copyWith(color: Colors.red))
+//   Txt('Hello', style: TxtStyle.bodyLBold.spec.copyWith(color: Colors.red))
 //
 // Both forms work. .copyWith is the shorthand.
 // ---------------------------------------------------------------------------
@@ -19,11 +19,11 @@ extension TxtStyleExtension on TxtStyle {
   /// The default [TxtSpec] for this style from [TxtDefaults].
   /// Note: this is the *library default*, not theme-overridden.
   /// For theme-aware resolution use [TxtThemeData.resolve].
-  TxtSpec get token =>
+  TxtSpec get spec =>
       TxtDefaults.specs[this] ??
       const TxtSpec(fontSize: 14, fontWeight: FontWeight.w400);
 
-  /// Shorthand: starts from the default token and applies overrides.
+  /// Shorthand: starts from the default spec and applies overrides.
   ///
   /// ```dart
   /// Txt('Hello', style: TxtStyle.bodyLBold.copyWith(
@@ -48,7 +48,7 @@ extension TxtStyleExtension on TxtStyle {
     Paint? background,
     List<Shadow>? shadows,
   }) {
-    return token.copyWith(
+    return spec.copyWith(
       fontSize: fontSize,
       fontWeight: fontWeight,
       fontFamily: fontFamily,

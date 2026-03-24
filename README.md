@@ -1,6 +1,6 @@
 # txt_kit
 
-A robust, reusable Flutter text widget library with per-app theming, custom style tokens, semantic color roles, and `copyWith` support at the call-site.
+A robust, reusable Flutter text widget library with per-app theming, custom style specs, semantic color roles, and `copyWith` support at the call-site.
 
 ---
 
@@ -8,9 +8,9 @@ A robust, reusable Flutter text widget library with per-app theming, custom styl
 
 | Feature | Description |
 |---|---|
-| **Built-in tokens** | 27 semantic styles (`bodyLBold`, `headerMSemiBold`, etc.) |
+| **Built-in Specs** | 27 semantic styles (`bodyLBold`, `headerMSemiBold`, etc.) |
 | **`copyWith` at call-site** | `TxtStyle.bodyLBold.copyWith(color: Colors.red)` |
-| **Per-app themes** | Override built-in tokens per-app via `TxtThemeData` |
+| **Per-app themes** | Override built-in specs per-app via `TxtThemeData` |
 | **Custom style keys** | Register your own enum values (`AppTxtStyle.heroTitle`) |
 | **Semantic colors** | `TxtColorRole.secondary` instead of hard-coded hex |
 | **Custom font per app** | `defaultFontFamily` + per-spec `fontFamily` overrides |
@@ -54,7 +54,7 @@ void main() {
           onDark:    Colors.white,
         ),
 
-        // Override built-in tokens for this app
+        // Override built-in specs for this app
         specOverrides: {
           TxtStyle.bodyLRegular: const TxtSpec(fontSize: 15, fontWeight: FontWeight.w400),
           TxtStyle.headerLBold:  const TxtSpec(fontSize: 36, fontWeight: FontWeight.w800),
@@ -71,7 +71,7 @@ void main() {
           AppTxtStyle.codeSnippet: const TxtSpec(
             fontSize: 13,
             fontWeight: FontWeight.w400,
-            fontFamily: 'JetBrainsMono',   // token-level font override
+            fontFamily: 'JetBrainsMono',   // specs-level font override
           ),
         },
       ),
@@ -132,17 +132,17 @@ RichText(
 
 ---
 
-## Token resolution priority
+## Spec resolution priority
 
 ```
-customTokens[key]           ← 1st: app custom keys
-tokenOverrides[key] + base  ← 2nd: merged override of built-in key
-TxtDefaults.tokens[key]     ← 3rd: library default
+customSpecs[key]           ← 1st: app custom keys
+specsOverrides[key] + base  ← 2nd: merged override of built-in key
+TxtDefaults.specss[key]     ← 3rd: library default
 ```
 
 ---
 
-## Built-in tokens
+## Built-in specs
 
 | Key | Default size | Weight |
 |---|---|---|
@@ -156,7 +156,7 @@ TxtDefaults.tokens[key]     ← 3rd: library default
 | `labelLRegular/SemiBold/Bold` | 10 | 400 / 600 / 700 |
 | `labelSRegular/SemiBold/Bold` | 8 | 400 / 600 / 700 |
 
-All sizes are in logical pixels. Override any of them per-app via `tokenOverrides`.
+All sizes are in logical pixels. Override any of them per-app via `specsOverrides`.
 
 ---
 
@@ -166,7 +166,7 @@ All sizes are in logical pixels. Override any of them per-app via `tokenOverride
 TxtSpec({
   required double fontSize,
   required FontWeight fontWeight,
-  String? fontFamily,       // overrides defaultFontFamily for this token only
+  String? fontFamily,       // overrides defaultFontFamily for this spec only
   double? letterSpacing,
   double? wordSpacing,
   double? height,           // line-height multiplier
