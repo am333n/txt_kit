@@ -24,9 +24,7 @@ A robust, reusable Flutter text widget library with per-app theming, custom styl
 ```yaml
 # pubspec.yaml
 dependencies:
-  txt_kit:
-    git:
-      url: https://github.com/yourorg/txt_kit.git
+  txt_kit: ^1.0.4
 ```
 
 ---
